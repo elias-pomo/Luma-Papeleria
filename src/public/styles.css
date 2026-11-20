@@ -920,3 +920,11 @@ form label.radio input:focus-visible { outline: 3px solid var(--cobalt); outline
 @media (min-width: 761px) {
   .detail-gallery { position: sticky; top: var(--gap); }
 }
+
+/* Links y textos largos de la personalización se cortan dentro de su celda,
+   así la columna de precios nunca se sale de la tarjeta. */
+.summary { table-layout: fixed; }
+.summary td:first-child { overflow-wrap: anywhere; }
+.summary .num { width: 8.5rem; }
+.custom-text { max-width: 100%; overflow-wrap: anywhere; }
+.cart-edit textarea { overflow-wrap: anywhere; }
