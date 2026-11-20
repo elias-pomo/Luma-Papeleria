@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+<a class="back-link" href="/mis-pedidos">Volver a mis pedidos</a>
+<div class="page-head">
+  <h1>Pedido #<%= order.number %></h1>
+  <span class="status status-<%= statusClass(order.status) %>"><%= order.status %></span>
+</div>
+
+<% if (error) { %><p class="alert"><%= error %></p><% } %>
+<% if (cancelled) { %><p class="notice">El pedido fue cancelado.</p><% } %>
+
+<% if (order.status === 'Pendiente de pago') { %>
+  <section class="card pay">
+    <h2>Pago</h2>
+    <p>Tu pedido está confirmado y listo para pagar. El pago se hace en un sitio externo; el pedido queda en
+      <strong>Pendiente de pago</strong> hasta que confirmemos que lo recibimos.</p>
+    <% if (paymentUrl) { %>
+      <a class="button" href="<%= paymentUrl %>" target="_blank" rel="noopener noreferrer">Ir a pago externo</a>
+    <% } else { %>
+      <p class="muted">El link de pago no está configurado. Contactanos para coordinar el pago.</p>
+    <% } %>
+  </section>
+<% } %>
+
+<div class="detail-grid">
+  <%- include('partials/order-detail', { order }) %>
+</div>
+
+<% if (canCancel) { %>
+  <form method="post" action="/mis-pedidos/<%= order._id %>/cancelar" class="danger-zone"
+    onsubmit="return confirm('¿Seguro que querés cancelar el pedido #<%= order.number %>? Esta acción no se puede deshacer.');">
+    <button type="submit" class="danger">Cancelar pedido</button>
+    <span class="muted small">Podés cancelarlo mientras no haya pasado a preparación.</span>
+  </form>
+<% } %>
+<%- include('partials/footer') %>

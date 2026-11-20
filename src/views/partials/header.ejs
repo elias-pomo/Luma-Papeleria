@@ -1,0 +1,86 @@
+<%
+  const path = locals.navPath || '';
+  const here = (prefix) => (prefix === '/' ? (path === '/' || path.startsWith('/?') || path.startsWith('/productos')) : path.startsWith(prefix)) ? 'aria-current="page"' : '';
+%>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> | Luma</title>
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preload" href="/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23ff5fa2' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/styles.css">
+  <script>
+    // Transiciones entre páginas: la esquina despegada no entra en la foto de salida,
+    // y al llegar con transición (o al volver atrás) la plancha no se vuelve a pegar.
+    addEventListener('pageswap', function () { document.documentElement.classList.add('leaving'); });
+    addEventListener('pagereveal', function (e) {
+      var nav = performance.getEntriesByType('navigation')[0];
+      if (e.viewTransition || (nav && nav.type !== 'navigate')) document.documentElement.classList.add('vt-nav');
+    });
+    addEventListener('pageshow', function (e) { if (e.persisted) document.documentElement.classList.remove('leaving'); });
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Luma, papelería personalizada: ir al catálogo">
+      <span class="brand-sticker">luma</span>
+      <span class="brand-sub">papelería personalizada</span>
+    </a>
+    <nav aria-label="Principal">
+      <a href="/" <%- here('/') %>>Catálogo</a>
+      <% if (user) { %>
+        <% if (user.role === 'admin') { %>
+          <a href="/admin" <%- path.startsWith('/admin') && !path.startsWith('/admin/tarifas') ? 'aria-current="page"' : '' %>>Pedidos</a>
+          <a href="/admin/tarifas" <%- here('/admin/tarifas') %>>Tarifas</a>
+        <% } %>
+        <% if (user.role === 'client') { %>
+          <a href="/mis-pedidos" <%- here('/mis-pedidos') %>>Mis pedidos</a>
+          <a href="/carrito" <%- here('/carrito') %>>Carrito<% if (cartCount) { %><span class="cart-count<%= locals.justAdded ? ' bump' : '' %>" aria-label="<%= cartCount %> productos"><%= cartCount %></span><% } %></a>
+        <% } %>
+        <details class="bell">
+          <summary aria-label="Notificaciones<%= unreadCount ? ` (${unreadCount} sin leer)` : '' %>">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <% if (unreadCount) { %><span class="badge"><%= unreadCount > 9 ? '9+' : unreadCount %></span><% } %>
+          </summary>
+          <div class="bell-panel">
+            <% if (!latestNotifications.length) { %>
+              <p class="muted small" style="padding: 0.6rem 0.75rem; margin: 0;">Cuando cambie el estado de un pedido, te avisamos acá.</p>
+            <% } else { %>
+              <ul>
+                <% latestNotifications.forEach(n => { %>
+                  <li class="<%= n.read ? '' : 'unread' %>">
+                    <form method="post" action="/notificaciones/<%= n._id %>/leer">
+                      <button type="submit" class="notif-item">
+                        <span><%= n.message %></span>
+                        <span class="muted small"><%= formatDate(n.date) %></span>
+                      </button>
+                    </form>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } %>
+            <div class="bell-foot">
+              <a href="/notificaciones">Ver todas</a>
+              <% if (unreadCount) { %>
+                <form method="post" action="/notificaciones/leer-todas" class="inline">
+                  <input type="hidden" name="back" value="<%= locals.currentPath || '/' %>">
+                  <button type="submit" class="link">Marcar todas como leídas</button>
+                </form>
+              <% } %>
+            </div>
+          </div>
+        </details>
+        <span class="user-name"><%= user.name %></span>
+        <form method="post" action="/logout" class="inline">
+          <button type="submit" class="link">Salir</button>
+        </form>
+      <% } else { %>
+        <a href="/login" <%- here('/login') %>>Ingresar</a>
+        <a href="/registro" class="button secondary">Crear cuenta</a>
+      <% } %>
+    </nav>
+  </header>
+  <main class="container" id="contenido">

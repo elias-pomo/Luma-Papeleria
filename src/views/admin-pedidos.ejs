@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+<h1>Pedidos</h1>
+
+<nav class="tabs">
+  <% Object.entries(views).forEach(([key, v]) => { %>
+    <a href="/admin?vista=<%= key %>" class="<%= key === vista ? 'active' : '' %>"><%= v.label %> <span class="count"><%= viewCounts[key] %></span></a>
+  <% }) %>
+</nav>
+
+<% if (!orders.length) { %>
+  <p class="card">No hay pedidos en esta vista.</p>
+<% } else { %>
+  <div class="card table-wrap">
+    <table class="list">
+      <thead><tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Entrega</th><th>Total</th><th>Estado</th></tr></thead>
+      <tbody>
+        <% orders.forEach(o => { const total = o.items.reduce((s, i) => s + i.qty * i.unitPrice, 0) + o.shippingCost; %>
+          <tr>
+            <td><a href="/admin/pedidos/<%= o._id %>">#<%= o.number %></a></td>
+            <td><%= formatDate(o.createdAt) %></td>
+            <td><%= o.client ? o.client.name : '—' %></td>
+            <td><%= o.deliveryMode === 'retiro' ? 'Retiro' : 'Envío' %></td>
+            <td><%= formatPrice(total) %></td>
+            <td><span class="status status-<%= statusClass(o.status) %>"><%= o.status %></span></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+<%- include('partials/footer') %>

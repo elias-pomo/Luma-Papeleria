@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+<h1>Carrito</h1>
+
+<% if (errors.length) { %>
+  <ul class="alert"><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
+<% } %>
+
+<% if (!lines.length) { %>
+  <section class="card empty">
+    <div class="blank-stickers" aria-hidden="true"><span></span><span></span><span></span></div>
+    <h2>Tu carrito está vacío</h2>
+    <p>Elegí un producto del catálogo y contanos cómo lo querés.</p>
+    <a class="button" href="/">Ver el catálogo</a>
+  </section>
+<% } else { %>
+  <div class="cart-layout">
+    <div class="cart">
+      <% lines.forEach((l, i) => { %>
+        <article class="card cart-line<%= justAdded && i === lines.length - 1 ? ' just-added' : '' %>">
+          <div class="cart-thumb sticker <%= categoryTone(l.category) %>">
+            <%- include('partials/product-media', { product: { name: l.name, image: l.image, imageUrl: l.imageUrl }, alt: '' }) %>
+          </div>
+          <div class="cart-info">
+            <h2><a href="/productos/<%= l.productId %>"><%= l.name %></a></h2>
+            <p class="muted"><%= formatPrice(l.unitPrice) %> c/u</p>
+            <form method="post" action="/carrito/<%= l.index %>/actualizar" class="cart-edit">
+              <label>Cantidad
+                <input type="number" name="qty" min="1" max="1000" step="1" value="<%= l.qty %>" required inputmode="numeric">
+              </label>
+              <label>Personalización
+                <textarea name="customization" rows="2" maxlength="500" required><%= l.customization %></textarea>
+              </label>
+              <button type="submit" class="secondary">Guardar cambios</button>
+            </form>
+          </div>
+          <div class="cart-side">
+            <p class="price"><%= formatPrice(l.subtotal) %></p>
+            <form method="post" action="/carrito/<%= l.index %>/eliminar">
+              <button type="submit" class="link">Quitar</button>
+            </form>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+
+    <aside class="card cart-total" aria-label="Resumen">
+      <p class="muted">Subtotal</p>
+      <p class="price"><%= formatPrice(total) %></p>
+      <p class="muted small">El envío se calcula en el paso siguiente con tu código postal. Retirar en el local no tiene costo.</p>
+      <a class="button" href="/carrito/checkout">Continuar con la entrega</a>
+    </aside>
+  </div>
+<% } %>
+<%- include('partials/footer') %>

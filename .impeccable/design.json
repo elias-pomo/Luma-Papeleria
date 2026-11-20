@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T00:00:00Z",
+  "title": "Design System: Luma",
+  "extensions": {
+    "colorMeta": {
+      "liner": { "role": "neutral", "displayName": "Silicone Liner", "cssVar": "--liner", "tonalRamp": ["oklch(15% 0.006 260)", "oklch(25% 0.008 260)", "oklch(35% 0.01 260)", "oklch(45% 0.012 260)", "oklch(55% 0.012 260)", "oklch(65% 0.012 260)", "oklch(80% 0.01 260)", "oklch(96% 0.008 260)"] },
+      "cut-grid": { "role": "neutral", "displayName": "Cut Grid", "cssVar": "--grid" },
+      "die-line": { "role": "neutral", "displayName": "Die Line", "cssVar": "--die" },
+      "sticker-back": { "role": "neutral", "displayName": "Sticker Back", "cssVar": "--back" },
+      "weed-white": { "role": "neutral", "displayName": "Weed White", "cssVar": "--white" },
+      "panel-line": { "role": "neutral", "displayName": "Panel Line", "cssVar": "--line" },
+      "ink": { "role": "neutral", "displayName": "Press Ink", "cssVar": "--ink", "tonalRamp": ["oklch(15% 0.03 280)", "oklch(22% 0.04 280)", "oklch(35% 0.05 278)", "oklch(45% 0.05 278)", "oklch(55% 0.04 278)", "oklch(65% 0.03 278)", "oklch(80% 0.02 278)", "oklch(95% 0.008 278)"] },
+      "ink-soft": { "role": "neutral", "displayName": "Soft Ink", "cssVar": "--ink-soft" },
+      "cobalt": { "role": "primary", "displayName": "Cobalt Vinyl", "cssVar": "--cobalt", "tonalRamp": ["oklch(15% 0.08 266)", "oklch(25% 0.13 266)", "oklch(35% 0.18 266)", "oklch(48% 0.22 266)", "oklch(55% 0.2 266)", "oklch(65% 0.16 266)", "oklch(80% 0.09 266)", "oklch(95% 0.025 266)"] },
+      "cobalt-dark": { "role": "primary", "displayName": "Cobalt Pressed", "cssVar": "--cobalt-dark" },
+      "bubblegum": { "role": "secondary", "displayName": "Bubblegum", "cssVar": "--pink", "tonalRamp": ["oklch(15% 0.05 357)", "oklch(25% 0.09 357)", "oklch(35% 0.13 357)", "oklch(45% 0.16 357)", "oklch(55% 0.18 357)", "oklch(70% 0.2 357)", "oklch(82% 0.11 357)", "oklch(95% 0.03 357)"] },
+      "lemon": { "role": "secondary", "displayName": "Lemon", "cssVar": "--lemon", "tonalRamp": ["oklch(15% 0.03 95)", "oklch(25% 0.05 95)", "oklch(35% 0.07 95)", "oklch(45% 0.09 95)", "oklch(55% 0.11 95)", "oklch(65% 0.13 95)", "oklch(89% 0.17 95)", "oklch(96% 0.06 95)"] },
+      "mint": { "role": "tertiary", "displayName": "Mint", "cssVar": "--mint", "tonalRamp": ["oklch(15% 0.03 158)", "oklch(25% 0.06 158)", "oklch(35% 0.08 158)", "oklch(45% 0.1 158)", "oklch(55% 0.12 158)", "oklch(65% 0.14 158)", "oklch(79% 0.16 158)", "oklch(95% 0.04 158)"] },
+      "orange": { "role": "tertiary", "displayName": "Safety Orange", "cssVar": "--orange", "tonalRamp": ["oklch(15% 0.04 47)", "oklch(25% 0.07 47)", "oklch(35% 0.1 47)", "oklch(45% 0.13 47)", "oklch(55% 0.15 47)", "oklch(72% 0.18 47)", "oklch(82% 0.1 47)", "oklch(95% 0.03 47)"] },
+      "kraft": { "role": "tertiary", "displayName": "Kraft", "cssVar": "--kraft", "tonalRamp": ["oklch(15% 0.02 66)", "oklch(25% 0.04 66)", "oklch(35% 0.05 66)", "oklch(45% 0.07 66)", "oklch(55% 0.08 66)", "oklch(65% 0.09 66)", "oklch(75% 0.1 66)", "oklch(95% 0.03 66)"] },
+      "state-stop": { "role": "status", "displayName": "Stop Red", "cssVar": "--st-stop", "tonalRamp": ["oklch(15% 0.05 15)", "oklch(25% 0.09 15)", "oklch(35% 0.13 15)", "oklch(45% 0.17 15)", "oklch(56% 0.21 15)", "oklch(65% 0.16 15)", "oklch(80% 0.09 15)", "oklch(95% 0.025 15)"] },
+      "stop-wash": { "role": "status", "displayName": "Stop Wash", "cssVar": "--stop-bg" },
+      "stop-ink": { "role": "status", "displayName": "Stop Ink", "note": "literal #9b1236 in styles.css, not yet a custom property" },
+      "stop-edge": { "role": "status", "displayName": "Stop Edge", "note": "literal #f3a5b8 in styles.css, not yet a custom property" },
+      "go-wash": { "role": "status", "displayName": "Go Wash", "cssVar": "--go-bg" }
+    },
+    "stateVocabulary": [
+      { "token": "--st-wait", "color": "lemon", "states": ["Solicitado", "En revisión"] },
+      { "token": "--st-go", "color": "cobalt", "states": ["Confirmado", "Pendiente de pago", "Vigente"] },
+      { "token": "--st-make", "color": "orange", "states": ["En preparación", "Listo para entrega", "Enviado"] },
+      { "token": "--st-done", "color": "mint", "states": ["Entregado"] },
+      { "token": "--st-stop", "color": "state-stop", "states": ["Rechazado", "Cancelado", "Vencida"] }
+    ],
+    "categoryMap": [
+      { "category": "Agendas", "tone": "cobalt", "die": "portrait 3:4" },
+      { "category": "Cuadernos", "tone": "bubblegum", "die": "portrait 3:4" },
+      { "category": "Stickers", "tone": "lemon", "die": "round" },
+      { "category": "Tarjetería", "tone": "mint", "die": "card 16:10, 8px core" },
+      { "category": "Calendarios", "tone": "orange", "die": "4:3 default" },
+      { "category": "Packaging", "tone": "kraft", "die": "square, 6px core" }
+    ],
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero sticker headline only; width 125%." },
+      "headline": { "displayName": "Headline", "purpose": "Page h1; 118% width on the product page." },
+      "title": { "displayName": "Title", "purpose": "Section h2 inside panels." },
+      "sticker-face": { "displayName": "Sticker Face", "purpose": "Product name printed on placeholder sticker cores; container-relative size." },
+      "body": { "displayName": "Body", "purpose": "Running text, tabular numerals." },
+      "label": { "displayName": "Label", "purpose": "Form labels, chips, tabs, category lines." },
+      "price": { "displayName": "Price", "purpose": "Every price; never wraps." }
+    },
+    "shadows": [
+      { "name": "none", "value": "none", "purpose": "The system has no elevation shadows; depth is the white weed border." },
+      { "name": "ring-dot", "value": "0 0 0 1.5px var(--white), 0 0 0 2.5px var(--line)", "purpose": "Zero-blur double ring around a category dot; a border, not elevation." },
+      { "name": "ring-step", "value": "0 0 0 1.5px var(--die)", "purpose": "Zero-blur ring around the current production-record step." }
+    ],
+    "dieLine": [
+      { "name": "die-sticker", "value": "outline: 1.5px dashed var(--die); outline-offset: 5px", "purpose": "Product stickers and round sticker media." },
+      { "name": "die-chip", "value": "outline: 1.5px dashed var(--die); outline-offset: 2px", "purpose": "Chips, wordmark, price tag, step numbers." },
+      { "name": "die-hero", "value": "outline: 2px dashed var(--die); outline-offset: 7px", "purpose": "Hero sticker and order-received sticker (5px offset)." }
+    ],
+    "motion": [
+      { "name": "ease-stick", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The single curve for every settle, stick, peel, stamp and bump." },
+      { "name": "hero-settle", "value": "0.7s", "purpose": "The one load moment: hero sticker settles from -4deg / -10px / 1.03 to -1.2deg." },
+      { "name": "stick-down", "value": "0.5s, 45ms stagger, capped at 10", "purpose": "Filtered results only; skipped on back/forward and view-transition arrival." },
+      { "name": "view-transition", "value": "0.42s groups, 0.2s root", "purpose": "Product core morphs from sheet to product page." },
+      { "name": "peel-corner", "value": "0.3s in, 0.16s ease-out out", "purpose": "Hover/focus peels the top-right corner; round stickers rotate -8deg and lift 3px instead." },
+      { "name": "bump", "value": "0.45s, 0.2s delay", "purpose": "Cart count and notification badge after adding." },
+      { "name": "stamp", "value": "0.5s, 0.15s delay", "purpose": "Current history step stamps once." },
+      { "name": "control", "value": "0.12-0.15s ease", "purpose": "Button colour swap, press scale 0.97, input border." },
+      { "name": "reduced-motion", "value": "animation: none; transition: none; @view-transition navigation: none", "purpose": "Removes all movement; end states are static so state is kept." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "600px" },
+      { "name": "cart-line", "value": "640px" },
+      { "name": "detail", "value": "760px" },
+      { "name": "checkout", "value": "780px" },
+      { "name": "hero", "value": "860px" },
+      { "name": "cart", "value": "880px" }
+    ],
+    "registers": {
+      "persuade": ["catálogo", "resultados filtrados", "ficha de producto", "pedido confirmado"],
+      "operate": ["carrito", "checkout", "mis pedidos", "detalle de pedido", "notificaciones", "panel admin", "tarifas", "login / registro"]
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Cobalt vinyl pill for the main action on any screen.",
+      "html": "<button class=\"ds-btn\">Agregar al carrito</button>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; min-height: 44px; padding: 0.6rem 1.35rem; border: 2px solid var(--cobalt, #2346d8); border-radius: 999px; background: var(--cobalt, #2346d8); color: #fff; font-family: Archivo, system-ui, sans-serif; font-weight: 700; font-stretch: 108%; line-height: 1.15; cursor: pointer; transition: background-color 0.15s ease, transform 0.12s ease; } .ds-btn:hover { background: var(--cobalt-dark, #1a35a8); border-color: var(--cobalt-dark, #1a35a8); } .ds-btn:focus-visible { outline: 3px solid var(--cobalt, #2346d8); outline-offset: 3px; } .ds-btn:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "White pill with ink edge; inverts to ink on hover.",
+      "html": "<button class=\"ds-btn-secondary\">Crear cuenta</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; min-height: 44px; padding: 0.6rem 1.35rem; border: 2px solid var(--ink, #17182b); border-radius: 999px; background: #fff; color: var(--ink, #17182b); font-family: Archivo, system-ui, sans-serif; font-weight: 700; font-stretch: 108%; cursor: pointer; transition: background-color 0.15s ease, transform 0.12s ease; } .ds-btn-secondary:hover { background: var(--ink, #17182b); color: #fff; } .ds-btn-secondary:focus-visible { outline: 3px solid var(--cobalt, #2346d8); outline-offset: 3px; } .ds-btn-secondary:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Small pill sticker in the category's vinyl with weed border and die line; current chip fills ink.",
+      "html": "<div class=\"ds-chips\"><a class=\"ds-chip ds-current\" href=\"#\">Todo</a><a class=\"ds-chip\" style=\"--tone:#ff5fa2\" href=\"#\">Cuadernos</a><a class=\"ds-chip\" style=\"--tone:#ffd83d\" href=\"#\">Stickers</a></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 0.9rem; padding: 6px; background: var(--liner, #eef1f6); } .ds-chip { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 1rem 0.4rem; border: 3px solid #fff; border-radius: 999px; outline: 1.5px dashed var(--die, #9aa5ba); outline-offset: 2px; background: var(--tone, #fff); color: var(--ink, #17182b); font-family: Archivo, system-ui, sans-serif; font-size: 0.875rem; font-weight: 700; text-decoration: none; transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1); } .ds-chip:hover { transform: rotate(-3deg) scale(1.04); } .ds-chip:focus-visible { outline: 3px solid var(--cobalt, #2346d8); outline-offset: 3px; } .ds-chip.ds-current { background: var(--ink, #17182b); color: #fff; outline-style: solid; outline-color: var(--ink, #17182b); }"
+    },
+    {
+      "name": "Product Sticker",
+      "kind": "card",
+      "refersTo": "product-sticker",
+      "description": "Signature component: tone core in the category die shape, white weed border, dashed die line; hover peels the corner.",
+      "html": "<div class=\"ds-sheet\"><a class=\"ds-sticker\" href=\"#\" style=\"--tone:#2346d8;--on:#fff;--ar:3/4\"><div class=\"ds-core\">Agenda 2027</div><div class=\"ds-body\"><span class=\"ds-cat\"><span class=\"ds-dot\"></span>Agendas</span><span class=\"ds-price\"><span class=\"ds-pl\">desde</span> $ 18.500</span></div></a></div>",
+      "css": ".ds-sheet { padding: 24px; background-color: var(--liner, #eef1f6); background-image: linear-gradient(var(--grid, #dbe1ec) 1px, transparent 1px), linear-gradient(90deg, var(--grid, #dbe1ec) 1px, transparent 1px); background-size: 24px 24px; } .ds-sticker { position: relative; display: flex; flex-direction: column; width: 240px; padding: 8px; background: #fff; border-radius: 22px; outline: 1.5px dashed var(--die, #9aa5ba); outline-offset: 5px; color: var(--ink, #17182b); text-decoration: none; font-family: Archivo, system-ui, sans-serif; } .ds-sticker::after { content: ''; position: absolute; top: 0; right: 0; width: 46px; height: 46px; background: linear-gradient(225deg, var(--liner, #eef1f6) 0 50%, var(--back, #dde3ec) 50% 100%); transform: scale(0); transform-origin: top right; transition: transform 0.16s ease-out; } .ds-sticker:hover::after, .ds-sticker:focus-visible::after { transform: scale(1); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .ds-sticker:focus-visible { outline: 3px solid var(--cobalt, #2346d8); outline-offset: 5px; } .ds-core { display: flex; align-items: flex-end; aspect-ratio: var(--ar, 4/3); padding: 1rem 1.1rem; border-radius: 14px; background: var(--tone); color: var(--on, #17182b); font-size: 1.8rem; font-weight: 850; font-stretch: 112%; line-height: 1.04; letter-spacing: -0.03em; } .ds-body { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.85rem 0.6rem 0.45rem; } .ds-cat { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 600; color: var(--ink-soft, #4b5270); } .ds-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--tone); box-shadow: 0 0 0 1.5px #fff, 0 0 0 2.5px var(--line, #d3dae6); } .ds-price { font-weight: 750; font-stretch: 108%; white-space: nowrap; } .ds-pl { font-weight: 500; font-stretch: 100%; color: var(--ink-soft, #4b5270); }"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Operate register container: white, hairline edge, no die line, never rotated.",
+      "html": "<section class=\"ds-panel\"><h2>Productos</h2><p>2 × Cuaderno A5 personalizado</p></section>",
+      "css": ".ds-panel { max-width: 420px; padding: clamp(1.1rem, 3vw, 1.5rem); background: #fff; border: 1px solid var(--line, #d3dae6); border-radius: 18px; font-family: Archivo, system-ui, sans-serif; color: var(--ink, #17182b); } .ds-panel h2 { margin: 0 0 0.75rem; font-size: 1.25rem; font-weight: 700; font-stretch: 105%; line-height: 1.1; } .ds-panel p { margin: 0; line-height: 1.55; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "White field, 12px radius, cobalt focus.",
+      "html": "<label class=\"ds-label\">Código postal<input class=\"ds-input\" placeholder=\"Ej.: 1414\"></label>",
+      "css": ".ds-label { display: block; font-family: Archivo, system-ui, sans-serif; font-size: 0.875rem; font-weight: 600; color: var(--ink, #17182b); max-width: 320px; } .ds-input { display: block; width: 100%; margin-top: 0.35rem; padding: 0.65rem 0.8rem; border: 1.5px solid var(--line, #d3dae6); border-radius: 12px; background: #fff; color: var(--ink, #17182b); font: inherit; font-size: 1rem; font-weight: 400; transition: border-color 0.15s ease; } .ds-input::placeholder { color: #6b7290; } .ds-input:hover { border-color: var(--die, #9aa5ba); } .ds-input:focus-visible { outline: 3px solid var(--cobalt, #2346d8); outline-offset: 1px; border-color: var(--cobalt, #2346d8); }"
+    },
+    {
+      "name": "Status Pill",
+      "kind": "custom",
+      "refersTo": "status",
+      "description": "Fixed state vocabulary: vinyl dot plus label.",
+      "html": "<div class=\"ds-statuses\"><span class=\"ds-status\" style=\"--st:#ffd83d\">En revisión</span><span class=\"ds-status\" style=\"--st:#2346d8\">Confirmado</span><span class=\"ds-status\" style=\"--st:#ff7a2f\">En preparación</span><span class=\"ds-status\" style=\"--st:#3ed598\">Entregado</span><span class=\"ds-status ds-stop\" style=\"--st:#d7264f\">Rechazado</span></div>",
+      "css": ".ds-statuses { display: flex; flex-wrap: wrap; gap: 0.5rem; } .ds-status { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.2rem 0.7rem 0.2rem 0.45rem; border: 1.5px solid var(--line, #d3dae6); border-radius: 999px; background: #fff; color: var(--ink, #17182b); font-family: Archivo, system-ui, sans-serif; font-size: 0.8125rem; font-weight: 650; line-height: 1.3; white-space: nowrap; } .ds-status::before { content: ''; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--st); flex: none; } .ds-status.ds-stop { color: #9b1236; border-color: #f3a5b8; }"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "White band with the pink wordmark sticker and plain ink links; current page cobalt underlined.",
+      "html": "<header class=\"ds-top\"><a class=\"ds-brand\" href=\"#\"><span class=\"ds-mark\">luma</span><span class=\"ds-sub\">papelería personalizada</span></a><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Catálogo</a><a href=\"#\">Mis pedidos</a><a href=\"#\">Carrito<span class=\"ds-count\">2</span></a></nav></header>",
+      "css": ".ds-top { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; flex-wrap: wrap; padding: 0.9rem 1.5rem; background: #fff; border-bottom: 1px solid var(--line, #d3dae6); font-family: Archivo, system-ui, sans-serif; } .ds-brand { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--ink, #17182b); text-decoration: none; } .ds-mark { display: inline-block; padding: 0.2rem 0.85rem 0.3rem; border: 3px solid #fff; border-radius: 999px; outline: 1.5px dashed var(--die, #9aa5ba); outline-offset: 2px; background: var(--pink, #ff5fa2); color: var(--ink, #17182b); font-size: 1.35rem; font-weight: 850; font-stretch: 125%; letter-spacing: -0.03em; line-height: 1.1; transform: rotate(-3deg); } .ds-sub { font-size: 0.875rem; font-weight: 500; color: var(--ink-soft, #4b5270); line-height: 1.2; max-width: 9rem; } .ds-nav { display: flex; align-items: center; gap: 0.35rem 1.25rem; flex-wrap: wrap; } .ds-nav a { color: var(--ink, #17182b); text-decoration: none; font-weight: 600; padding: 0.25rem 0; } .ds-nav a:hover { color: var(--cobalt, #2346d8); } .ds-nav a:focus-visible { outline: 3px solid var(--cobalt, #2346d8); outline-offset: 3px; border-radius: 6px; } .ds-nav a[aria-current='page'] { color: var(--cobalt, #2346d8); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em; } .ds-count { display: inline-grid; place-items: center; min-width: 1.4rem; height: 1.4rem; margin-left: 0.3rem; padding: 0 0.35rem; border-radius: 999px; background: var(--lemon, #ffd83d); color: var(--ink, #17182b); font-size: 0.75rem; font-weight: 800; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Kiss-Cut Sticker Sheet",
+    "overview": "The whole store is one sheet of die-cut stickers still on its backing liner. The page ground is the cool silicone liner with its 24px cut grid printed on it; every product is a flat vinyl sticker with a white weed border and a dashed die line ringing it; choosing a product is peeling it off. The grid is not decoration: catalog columns are exactly ten cells wide with one-cell gutters, measured from the sheet edge, so every sticker lands on a cut line.\n\nThe system has two registers that share every token. Persuade (catalog home, filtered results, product page, order-received) is the sheet itself: saturated vinyl fields, die lines, stickers set slightly askew, expanded heavy Archivo. Operate (cart, checkout, Mis pedidos, order detail, notifications, admin panel, rates, login) is the work bench beside the sheet: white panels with a hairline edge, square to the grid, no die lines and no rotation, colour reduced to status dots, the cobalt action and the occasional lemon count. The quiet register is the same material, used less.\n\nColour is flat and opaque everywhere. Active states are flat colour swaps; depth comes from the white weed border sitting on the liner, never from blur. Motion answers the visitor: one load moment on the home (the hero sticker settling), and everything else is a response to filtering, hovering, adding or progressing an order.",
+    "keyCharacteristics": [
+      "Liner ground (#eef1f6) with a visible 24px cut grid on every page.",
+      "Vinyl stickers: tone fill, white weed border, 1.5px dashed die line offset outside it.",
+      "One family, Archivo variable: width axis carries the voice (125% display, 100% UI).",
+      "Die shape follows category: portrait 3:4, card 16:10, square, round, 4:3 default.",
+      "Pills for every action, chip, tab and status.",
+      "One fixed state vocabulary: vinyl dot plus label.",
+      "No diffuse shadows, no decorative gradients."
+    ],
+    "rules": [
+      { "name": "The One Vinyl Per Category Rule", "body": "Each category owns one tone (Agendas cobalt, Cuadernos bubblegum, Stickers lemon, Tarjetería mint, Calendarios orange, Packaging kraft); a new category takes a fixed tone hashed from its name. A sticker is one tone; tones never blend or gradient into each other.", "section": "colors" },
+      { "name": "The Fixed State Vocabulary Rule", "body": "Order state is always a vinyl dot plus its label: lemon = waiting (Solicitado, En revisión), cobalt = go (Confirmado, Pendiente de pago, rate Vigente), orange = making (En preparación, Listo para entrega, Enviado), mint = done (Entregado), stop red = stopped (Rechazado, Cancelado, rate Vencida). No screen invents another mapping.", "section": "colors" },
+      { "name": "The Ink On Vinyl Rule", "body": "Type on bubblegum, lemon, mint, orange and kraft is ink; only cobalt and ink fills take white type.", "section": "colors" },
+      { "name": "The Width Is The Voice Rule", "body": "Hierarchy is expressed by stretch and weight together, not size alone. Display and sticker faces are expanded; anything a person reads to operate (labels, inputs, links, table cells) stays at 100% width.", "section": "typography" },
+      { "name": "The Weed Border Is The Shadow Rule", "body": "If something must read as raised, give it a white weed border and a die line, never a blur or an offset shadow.", "section": "elevation" },
+      { "name": "The Hard-Stop Only Rule", "body": "Gradients appear only as hard-stop drawing tools for the world's own materials: the cut-grid lines, the registration crosshairs and the folded peel corner. A gradient that blends one colour into another is never used.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do lay every Persuade surface on the liner with the 24px cut grid visible, and size catalog columns in whole cells (240px, 144px on phones).",
+      "Do give every sticker a white weed border plus a 1.5px dashed die-line outline offset outside it.",
+      "Do pick the die shape from the category (3:4, 16:10, square, round, 4:3) and the tone from the category map.",
+      "Do show order state only as vinyl dot plus label, using the fixed five-colour vocabulary.",
+      "Do keep Operate surfaces as square white panels on the same tokens: no die lines, no rotation. The only stickers there are product thumbnails (cart line) and blank-sticker empty states.",
+      "Do make every action a pill, cobalt for primary, with a 3px cobalt focus ring.",
+      "Do use expanded heavy Archivo (112-125%, 800-850) for display and sticker faces, and 100% width for UI."
+    ],
+    "donts": [
+      "Don't use diffuse or offset shadows; depth is the weed border.",
+      "Don't use gradients that blend colours; hard-stop gradients drawing the grid, registration marks and peel corner are the only gradients.",
+      "Don't put two vinyl tones in one sticker or reuse kraft for anything but Packaging.",
+      "Don't invent a new state colour or a status badge without its dot.",
+      "Don't add load animations beyond the hero settle; motion answers the person's action.",
+      "Don't force long category labels into round stickers; categories are pill chips."
+    ]
+  }
+}

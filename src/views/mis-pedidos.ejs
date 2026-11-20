@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<h1>Mis pedidos</h1>
+
+<% if (!orders.length) { %>
+  <section class="card empty">
+    <div class="blank-stickers" aria-hidden="true"><span></span><span></span><span></span></div>
+    <h2>Todavía no hiciste pedidos</h2>
+    <p>Cuando hagas uno, acá vas a ver en qué paso está.</p>
+    <a class="button" href="/">Ver el catálogo</a>
+  </section>
+<% } else { %>
+  <div class="card table-wrap">
+    <table class="list">
+      <thead><tr><th>Pedido</th><th>Fecha</th><th>Entrega</th><th>Total</th><th>Estado</th></tr></thead>
+      <tbody>
+        <% orders.forEach(o => { const total = o.items.reduce((s, i) => s + i.qty * i.unitPrice, 0) + o.shippingCost; %>
+          <tr>
+            <td><a href="/mis-pedidos/<%= o._id %>">#<%= o.number %></a></td>
+            <td><%= formatDate(o.createdAt) %></td>
+            <td><%= o.deliveryMode === 'retiro' ? 'Retiro' : 'Envío' %></td>
+            <td><%= formatPrice(total) %></td>
+            <td><span class="status status-<%= statusClass(o.status) %>"><%= o.status %></span></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+<%- include('partials/footer') %>

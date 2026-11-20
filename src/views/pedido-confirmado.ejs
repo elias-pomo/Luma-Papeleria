@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<% const subtotal = order.items.reduce((s, i) => s + i.qty * i.unitPrice, 0); %>
+<section class="card narrow confirmed">
+  <div class="order-sticker"><span><small>Pedido</small><strong>#<%= order.number %></strong></span></div>
+  <h1>Recibimos tu pedido</h1>
+  <p>Ahora lo revisamos y te avisamos cuando lo confirmemos. Podés seguir cada paso desde Mis pedidos.</p>
+  <p class="muted">
+    <%= order.deliveryMode === 'retiro' ? 'Retiro en el local' : `Envío a ${order.address} (CP ${order.postalCode})` %>.
+    Total <strong><%= formatPrice(subtotal + order.shippingCost) %></strong><%= order.shippingCost ? `, con ${formatPrice(order.shippingCost)} de envío` : '' %>.
+  </p>
+  <div class="actions-inline">
+    <a class="button" href="/mis-pedidos/<%= order._id %>">Ver el pedido</a>
+    <a class="button secondary" href="/">Seguir en el catálogo</a>
+  </div>
+</section>
+<%- include('partials/footer') %>

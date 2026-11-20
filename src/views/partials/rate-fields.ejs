@@ -1,0 +1,15 @@
+<%# Campos del formulario de tarifa. Recibe: values %>
+<div class="rate-fields">
+  <label>CP desde
+    <input type="text" name="cpFrom" value="<%= values.cpFrom ?? '' %>" inputmode="numeric" pattern="\d{4}" maxlength="4" required>
+  </label>
+  <label>CP hasta
+    <input type="text" name="cpTo" value="<%= values.cpTo ?? '' %>" inputmode="numeric" pattern="\d{4}" maxlength="4" required>
+  </label>
+  <label>Costo ($)
+    <input type="number" name="cost" value="<%= values.cost ?? '' %>" min="0" step="1" required>
+  </label>
+  <label>Vigente hasta
+    <input type="date" name="validUntil" value="<%= values.validUntil ?? '' %>" required>
+  </label>
+</div>

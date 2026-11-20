@@ -1,0 +1,36 @@
+<%# Detalle de un pedido (cliente y admin). Recibe: order %>
+<% const subtotal = order.items.reduce((s, i) => s + i.qty * i.unitPrice, 0); %>
+<section class="card">
+  <h2>Productos</h2>
+  <table class="summary">
+    <% order.items.forEach(i => { %>
+      <tr>
+        <td><%= i.qty %> × <%= i.name %> <span class="muted small">(<%= formatPrice(i.unitPrice) %> c/u)</span><br>
+          <span class="custom-text"><%= i.customization || 'Sin personalización' %></span></td>
+        <td class="num"><%= formatPrice(i.qty * i.unitPrice) %></td>
+      </tr>
+    <% }) %>
+    <tr><td>Subtotal</td><td class="num"><%= formatPrice(subtotal) %></td></tr>
+    <tr><td><%= order.deliveryMode === 'retiro' ? 'Retiro en el local' : `Envío a CP ${order.postalCode}` %></td>
+      <td class="num"><%= order.shippingCost ? formatPrice(order.shippingCost) : 'Sin costo' %></td></tr>
+    <tr class="total"><td>Total</td><td class="num"><%= formatPrice(subtotal + order.shippingCost) %></td></tr>
+  </table>
+  <% if (order.deliveryMode === 'domicilio') { %>
+    <p class="muted small">Dirección: <%= order.address %> (CP <%= order.postalCode %>)</p>
+  <% } %>
+</section>
+
+<section class="card">
+  <h2>Historial de estados</h2>
+  <ol class="history">
+    <% order.history.forEach(h => { %>
+      <li>
+        <span class="status status-<%= statusClass(h.status) %>"><%= h.status %></span>
+        <span class="muted small"><%= formatDate(h.date) %><% if (h.by) { %>, por <%= h.by.role === 'admin' ? 'Luma' : h.by.name %><% } %></span>
+      </li>
+    <% }) %>
+  </ol>
+  <% if (order.status === 'Rechazado' && order.rejectReason) { %>
+    <p class="alert">Motivo del rechazo: <%= order.rejectReason %></p>
+  <% } %>
+</section>

@@ -1,0 +1,60 @@
+<%- include('partials/header') %>
+<nav class="crumbs" aria-label="Ubicación">
+  <a class="back-link" href="/">Volver al catálogo</a>
+  <a class="chip category-chip <%= categoryTone(product.category) %>" href="/?categoria=<%= encodeURIComponent(product.category) %>"><%= product.category %></a>
+</nav>
+<article class="detail">
+  <div class="detail-media sticker <%= categoryTone(product.category) %> <%= categoryShape(product.category) %>">
+    <%- include('partials/product-media', { product, vt: `sticker-${product._id}` }) %>
+  </div>
+
+  <div class="detail-info">
+    <h1><%= product.name %></h1>
+    <p class="lead"><%= product.description %></p>
+    <p class="price price-tag"><span class="price-label">Precio base</span> <%= formatPrice(product.basePrice) %></p>
+
+    <% if (!user) { %>
+      <div class="card">
+        <p><a href="/login?next=<%= encodeURIComponent('/productos/' + product._id) %>">Ingresá</a> o <a href="/registro">creá una cuenta</a> para hacer un pedido.</p>
+      </div>
+    <% } else if (user.role === 'client') { %>
+      <form method="post" action="/carrito/agregar" class="card add-form">
+        <% if (errors.length) { %>
+          <ul class="alert"><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
+        <% } %>
+        <input type="hidden" name="productId" value="<%= product._id %>">
+        <label for="customization">¿Cómo lo querés?</label>
+        <p class="hint" id="customization-hint">Escribí el texto, los nombres, colores o lo que tenga que llevar.</p>
+        <div class="preview-label" id="preview" data-empty="Tu texto aparece acá" aria-hidden="true"></div>
+        <textarea id="customization" name="customization" rows="3" maxlength="500" required aria-describedby="customization-hint"
+          placeholder="Ej.: Sofía, tapa verde, letras doradas"><%= values.customization || '' %></textarea>
+        <label class="qty">Cantidad
+          <input type="number" name="qty" min="1" max="1000" step="1" value="<%= values.qty || 1 %>" required inputmode="numeric">
+        </label>
+        <button type="submit">Agregar al carrito</button>
+      </form>
+      <script>
+        // Mejora progresiva: muestra el texto sobre una etiqueta mientras se escribe.
+        (function () {
+          var input = document.getElementById('customization');
+          var preview = document.getElementById('preview');
+          if (!input || !preview) return;
+          var sync = function () {
+            var text = input.value.trim();
+            var wasEmpty = !preview.textContent;
+            preview.textContent = text;
+            // Se asienta solo cuando pasa de vacía a tener texto, no en cada tecla.
+            if (wasEmpty && text) {
+              preview.classList.remove('filled');
+              void preview.offsetWidth;
+              preview.classList.add('filled');
+            }
+          };
+          input.addEventListener('input', sync);
+          sync();
+        })();
+      </script>
+    <% } %>
+  </div>
+</article>
+<%- include('partials/footer') %>

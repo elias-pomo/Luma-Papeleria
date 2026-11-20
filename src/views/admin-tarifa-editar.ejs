@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+<a class="back-link" href="/admin/tarifas">Volver a tarifas</a>
+<section class="card">
+  <h1>Editar tarifa</h1>
+  <% if (errors.length) { %>
+    <ul class="alert"><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
+  <% } %>
+  <form method="post" action="/admin/tarifas/<%= rate._id %>">
+    <%- include('partials/rate-fields', { values }) %>
+    <button type="submit">Guardar cambios</button>
+  </form>
+</section>
+<%- include('partials/footer') %>

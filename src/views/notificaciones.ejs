@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<div class="page-head">
+  <h1>Notificaciones</h1>
+  <% if (notifications.some(n => !n.read)) { %>
+    <form method="post" action="/notificaciones/leer-todas" class="push-right">
+      <button type="submit" class="secondary">Marcar todas como leídas</button>
+    </form>
+  <% } %>
+</div>
+
+<% if (!notifications.length) { %>
+  <p class="card">No tenés notificaciones.</p>
+<% } else { %>
+  <ul class="card notif-list">
+    <% notifications.forEach(n => { %>
+      <li class="<%= n.read ? '' : 'unread' %>">
+        <form method="post" action="/notificaciones/<%= n._id %>/leer">
+          <button type="submit" class="notif-item">
+            <span><%= n.message %></span>
+            <span class="muted small"><%= formatDate(n.date) %><% if (!n.read) { %><span class="visually-hidden">, sin leer</span><% } %></span>
+          </button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+<%- include('partials/footer') %>

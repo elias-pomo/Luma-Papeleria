@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<section class="card narrow">
+  <h1>Crear cuenta</h1>
+  <% if (errors.length) { %>
+    <ul class="alert">
+      <% errors.forEach(e => { %><li><%= e %></li><% }) %>
+    </ul>
+  <% } %>
+  <form method="post" action="/registro">
+    <label>Nombre y apellido
+      <input type="text" name="name" value="<%= values.name || '' %>" required>
+    </label>
+    <label>Email
+      <input type="email" name="email" value="<%= values.email || '' %>" required>
+    </label>
+    <label>Teléfono
+      <input type="tel" name="phone" value="<%= values.phone || '' %>" required>
+    </label>
+    <label>Contraseña
+      <input type="password" name="password" minlength="6" required>
+    </label>
+    <label>Repetir contraseña
+      <input type="password" name="password2" minlength="6" required>
+    </label>
+    <button type="submit">Crear cuenta</button>
+  </form>
+  <p class="muted">¿Ya tenés cuenta? <a href="/login">Ingresá</a>.</p>
+</section>
+<%- include('partials/footer') %>

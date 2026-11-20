@@ -1,0 +1,10 @@
+<%# Núcleo del sticker: la foto del producto o, si todavía no hay, el color de su categoría con el nombre.
+    Recibe: product ({ name, image, imageUrl }), alt (opcional), vt (opcional: nombre para la transición entre catálogo y ficha) %>
+<% const src = productImage(product); %>
+<div class="product-media"<% if (locals.vt) { %> style="view-transition-name: <%= locals.vt %>"<% } %>>
+  <% if (!src) { %>
+    <div class="core-text" aria-hidden="true"><%= product.name %></div>
+  <% } else { %>
+    <img src="<%= src %>" alt="<%= locals.alt ?? product.name %>" loading="lazy" decoding="async">
+  <% } %>
+</div>

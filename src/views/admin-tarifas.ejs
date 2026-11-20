@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+<h1>Tarifas de envío</h1>
+<p class="muted">Cada tarifa cubre un rango de códigos postales y vale hasta el final del día de vigencia.
+  Si dos tarifas vigentes se superponen, se usa la cargada más recientemente.</p>
+
+<section class="card">
+  <h2>Nueva tarifa</h2>
+  <% if (errors.length) { %>
+    <ul class="alert"><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
+  <% } %>
+  <form method="post" action="/admin/tarifas">
+    <%- include('partials/rate-fields', { values }) %>
+    <button type="submit">Agregar tarifa</button>
+  </form>
+</section>
+
+<% if (!rates.length) { %>
+  <p class="card">No hay tarifas cargadas. Sin tarifas, los clientes solo pueden elegir retiro en el local.</p>
+<% } else { %>
+  <div class="card table-wrap">
+    <table class="list">
+      <thead><tr><th>Códigos postales</th><th>Costo</th><th>Vigente hasta</th><th>Estado</th><th></th></tr></thead>
+      <tbody>
+        <% rates.forEach(r => { %>
+          <tr>
+            <td><%= r.cpFrom %> – <%= r.cpTo %></td>
+            <td><%= formatPrice(r.cost) %></td>
+            <td><%= toInputDate(r.validUntil).split('-').reverse().join('/') %></td>
+            <td><span class="status <%= r.active ? 'status-vigente' : 'status-vencida' %>"><%= r.active ? 'Vigente' : 'Vencida' %></span></td>
+            <td class="row-actions">
+              <a href="/admin/tarifas/<%= r._id %>/editar">Editar</a>
+              <form method="post" action="/admin/tarifas/<%= r._id %>/eliminar" class="inline"
+                onsubmit="return confirm('¿Eliminar la tarifa <%= r.cpFrom %>–<%= r.cpTo %>?');">
+                <button type="submit" class="link">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+<%- include('partials/footer') %>

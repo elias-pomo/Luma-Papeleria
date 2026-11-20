@@ -1,0 +1,83 @@
+<%- include('partials/header') %>
+<%
+  const shippingCost = shipping && !shipping.noCoverage && values.deliveryMode === 'domicilio' ? shipping.cost : null;
+  const grandTotal = total + (shippingCost || 0);
+%>
+<a class="back-link" href="/carrito">Volver al carrito</a>
+<h1>Entrega y confirmación</h1>
+
+<% if (errors.length) { %>
+  <ul class="alert"><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
+<% } %>
+<% if (notice) { %><p class="notice"><%= notice %></p><% } %>
+
+<div class="checkout">
+  <section class="card">
+    <h2>Resumen</h2>
+    <table class="summary">
+      <% lines.forEach(l => { %>
+        <tr>
+          <td><%= l.qty %> × <%= l.name %><br><span class="custom-text"><%= l.customization %></span></td>
+          <td class="num"><%= formatPrice(l.subtotal) %></td>
+        </tr>
+      <% }) %>
+      <tr><td>Subtotal</td><td class="num"><%= formatPrice(total) %></td></tr>
+      <% if (values.deliveryMode === 'retiro') { %>
+        <tr><td>Retiro en el local</td><td class="num">Sin costo</td></tr>
+      <% } else if (shippingCost !== null) { %>
+        <tr><td>Envío a CP <%= shipping.postalCode %></td><td class="num"><%= formatPrice(shippingCost) %></td></tr>
+      <% } else { %>
+        <tr><td>Envío</td><td class="num muted">A calcular</td></tr>
+      <% } %>
+      <tr class="total"><td>Total</td><td class="num"><%= formatPrice(grandTotal) %></td></tr>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>Entrega</h2>
+
+    <% if (shipping && shipping.noCoverage) { %>
+      <div class="alert">
+        <p>No tenemos una tarifa de envío vigente para el código postal <strong><%= shipping.postalCode %></strong>.</p>
+        <p>Podés retirar el pedido en el local sin costo, o probar con otro código postal.</p>
+      </div>
+      <form method="post" action="/carrito/checkout" class="offer-pickup">
+        <input type="hidden" name="deliveryMode" value="retiro">
+        <input type="hidden" name="action" value="confirmar">
+        <button type="submit">Confirmar con retiro en el local</button>
+      </form>
+    <% } %>
+
+    <form method="post" action="/carrito/checkout">
+      <fieldset>
+        <legend>Modalidad</legend>
+        <label class="radio">
+          <input type="radio" name="deliveryMode" value="retiro" <%= values.deliveryMode === 'retiro' ? 'checked' : '' %> required>
+          Retiro en el local (sin costo)
+        </label>
+        <label class="radio">
+          <input type="radio" name="deliveryMode" value="domicilio" <%= values.deliveryMode === 'domicilio' ? 'checked' : '' %>>
+          Envío a domicilio
+        </label>
+      </fieldset>
+      <p class="muted small">Completá estos datos solo si elegiste envío a domicilio.</p>
+      <label>Dirección
+        <input type="text" name="address" value="<%= values.address || '' %>" placeholder="Calle, número, piso, depto.">
+      </label>
+      <label>Código postal
+        <span class="cp-row">
+          <input type="text" name="postalCode" value="<%= values.postalCode || '' %>" inputmode="numeric" pattern="\d{4}" maxlength="4" placeholder="1425">
+          <button type="submit" name="action" value="cotizar" class="secondary" formnovalidate>Calcular envío</button>
+        </span>
+      </label>
+      <% if (shippingCost !== null) { %>
+        <input type="hidden" name="quotedCp" value="<%= shipping.postalCode %>">
+        <input type="hidden" name="quotedCost" value="<%= shippingCost %>">
+      <% } %>
+      <div class="submit-row">
+        <button type="submit" name="action" value="confirmar">Confirmar pedido</button>
+      </div>
+    </form>
+  </section>
+</div>
+<%- include('partials/footer') %>

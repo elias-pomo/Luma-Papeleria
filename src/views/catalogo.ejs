@@ -1,0 +1,87 @@
+<%- include('partials/header') %>
+<% const filtering = Boolean(q || categoria); %>
+
+<% if (!filtering) { %>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-sticker">
+      <h1 id="hero-title">PAPELERÍA LUMA</h1>
+      <p>Agendas, cuadernos, stickers, tarjetas y packaging hechos a pedido. Elegís el producto, nos escribís cómo lo querés y lo preparamos.</p>
+      <form method="get" action="/" class="search" role="search">
+        <label class="visually-hidden" for="q">Buscar productos</label>
+        <input type="search" id="q" name="q" value="" placeholder="Buscá un producto">
+        <button type="submit">Buscar</button>
+      </form>
+    </div>
+    <ul class="facts">
+      <li class="fact tone-lemon">Revisamos cada pedido antes de hacerlo</li>
+      <li class="fact tone-mint">Retiro en el local o envío</li>
+    </ul>
+  </section>
+<% } else { %>
+  <div class="results-head">
+    <h1><%= q ? `Resultados para "${q}"` : categoria %></h1>
+    <form method="get" action="/" class="search" role="search">
+      <label class="visually-hidden" for="q">Buscar productos</label>
+      <input type="search" id="q" name="q" value="<%= q %>" placeholder="Buscar por nombre…">
+      <% if (categoria) { %><input type="hidden" name="categoria" value="<%= categoria %>"><% } %>
+      <button type="submit">Buscar</button>
+    </form>
+  </div>
+<% } %>
+
+<nav aria-label="Categorías">
+  <ul class="chips">
+    <li><a class="chip" href="/" <%- !categoria ? 'aria-current="page"' : '' %>>Todo</a></li>
+    <% categories.forEach(c => { %>
+      <li><a class="chip <%= categoryTone(c) %>" href="/?categoria=<%= encodeURIComponent(c) %>" <%- c === categoria ? 'aria-current="page"' : '' %>><%= c %></a></li>
+    <% }) %>
+  </ul>
+</nav>
+
+<% if (!products.length) { %>
+  <section class="card empty">
+    <div class="blank-stickers" aria-hidden="true"><span></span><span></span><span></span></div>
+    <h2>No encontramos productos<%= q ? ` para "${q}"` : '' %><%= categoria ? ` en ${categoria}` : '' %></h2>
+    <p>Probá con otra palabra o mirá todas las categorías.</p>
+    <a class="button" href="/">Ver todo el catálogo</a>
+  </section>
+<% } else { %>
+  <h2 class="visually-hidden"><%= products.length %> producto<%= products.length === 1 ? '' : 's' %></h2>
+  <div class="sheet">
+  <span class="reg reg-tl" aria-hidden="true"></span><span class="reg reg-tr" aria-hidden="true"></span>
+  <span class="reg reg-bl" aria-hidden="true"></span><span class="reg reg-br" aria-hidden="true"></span>
+  <div class="grid<%= filtering ? ' stagger' : '' %>">
+    <% products.forEach((p, i) => { %>
+      <a class="product sticker <%= categoryTone(p.category) %> <%= categoryShape(p.category) %>" href="/productos/<%= p._id %>" style="--i: <%= i %>">
+        <%- include('partials/product-media', { product: p, alt: '', vt: `sticker-${p._id}` }) %>
+        <div class="product-body">
+          <span class="category"><span class="dot"></span><%= p.category %></span>
+          <h2 class="<%= productImage(p) ? '' : 'visually-hidden' %>"><%= p.name %></h2>
+          <p class="price"><span class="price-label">desde</span> <%= formatPrice(p.basePrice) %></p>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+  </div>
+<% } %>
+
+<% if (!filtering) { %>
+  <section class="how" aria-labelledby="how-title">
+    <h2 id="how-title">Cómo pedir</h2>
+    <ol class="steps">
+      <li class="step sticker tone-cobalt">
+        <h3>Elegís y escribís tu texto</h3>
+        <p>Abrí el producto, contanos cómo lo querés y sumalo al carrito.</p>
+      </li>
+      <li class="step sticker tone-pink">
+        <h3>Revisamos tu pedido</h3>
+        <p>Lo confirmamos o te avisamos si hay que cambiar algo. Te llega cada novedad a la campanita.</p>
+      </li>
+      <li class="step sticker tone-mint">
+        <h3>Pagás y lo preparamos</h3>
+        <p>Con el pago confirmado lo hacemos, y lo retirás en el local o te lo enviamos.</p>
+      </li>
+    </ol>
+  </section>
+<% } %>
+<%- include('partials/footer') %>

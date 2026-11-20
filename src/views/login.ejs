@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+<section class="card narrow">
+  <h1>Ingresar</h1>
+  <% if (error) { %><p class="alert"><%= error %></p><% } %>
+  <form method="post" action="/login">
+    <% if (next) { %><input type="hidden" name="next" value="<%= next %>"><% } %>
+    <label>Email
+      <input type="email" name="email" value="<%= email %>" required autofocus>
+    </label>
+    <label>Contraseña
+      <input type="password" name="password" required>
+    </label>
+    <button type="submit">Ingresar</button>
+  </form>
+  <p class="muted">¿No tenés cuenta? <a href="/registro">Creá una</a>.</p>
+</section>
+<%- include('partials/footer') %>
