@@ -46,7 +46,7 @@ const priceFormat = new Intl.NumberFormat('es-AR', { style: 'currency', currency
 app.locals.formatPrice = (n) => priceFormat.format(n);
 const dateFormat = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' });
 app.locals.formatDate = (d) => dateFormat.format(new Date(d));
-app.locals.businessName = process.env.BUSINESS_NAME || 'Luma papelería personalizada';
+app.locals.businessName = process.env.BUSINESS_NAME || 'JUAG Impresiones y Papelería Creativa';
 // Cada categoría tiene su color de vinilo; las nuevas toman uno fijo según su nombre.
 const TONES = { Agendas: 'cobalt', Cuadernos: 'pink', Stickers: 'lemon', 'Tarjetería': 'mint', Calendarios: 'orange', Packaging: 'kraft' };
 const TONE_LIST = ['cobalt', 'pink', 'lemon', 'mint', 'orange', 'kraft'];

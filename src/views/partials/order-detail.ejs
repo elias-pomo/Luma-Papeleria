@@ -26,7 +26,7 @@
     <% order.history.forEach(h => { %>
       <li>
         <span class="status status-<%= statusClass(h.status) %>"><%= h.status %></span>
-        <span class="muted small"><%= formatDate(h.date) %><% if (h.by) { %>, por <%= h.by.role === 'admin' ? 'Luma' : h.by.name %><% } %></span>
+        <span class="muted small"><%= formatDate(h.date) %><% if (h.by) { %>, por <%= h.by.role === 'admin' ? 'JUAG' : h.by.name %><% } %></span>
       </li>
     <% }) %>
   </ol>

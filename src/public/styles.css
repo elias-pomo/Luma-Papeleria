@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Luma — papelería personalizada
+   JUAG — impresiones y papelería creativa
    Mundo: plancha de stickers troquelada. El fondo es el papel soporte con su
    grilla de corte; cada producto es un sticker de vinilo con borde blanco y
    línea de troquel. Color plano, sin degradés decorativos ni sombras difusas.
@@ -928,3 +928,13 @@ form label.radio input:focus-visible { outline: 3px solid var(--cobalt); outline
 .summary .num { width: 8.5rem; }
 .custom-text { max-width: 100%; overflow-wrap: anywhere; }
 .cart-edit textarea { overflow-wrap: anywhere; }
+
+/* Portada: el nombre grande y la bajada del rubro debajo, dentro del mismo título */
+.hero-sticker h1 .hero-name { display: block; }
+.hero-sticker h1 .hero-tagline {
+  display: block; margin-top: 0.6rem;
+  font-size: clamp(1.25rem, 3vw, 1.953rem); font-weight: 750; font-stretch: 112%;
+  line-height: 1.1; letter-spacing: -0.02em; color: var(--lemon);
+}
+/* La marca del encabezado: el rubro en dos líneas cortas */
+.brand-sub { max-width: 11.5rem; }

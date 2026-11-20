@@ -13,7 +13,7 @@ Audience and job: particulares and emprendedores in Argentina choosing a persona
 
 Constraints: server-rendered EJS, one stylesheet, forms work without JavaScript, Spanish (AR) voseo, ARS prices, no stock, no invented claims. Product photos arrive later by URL; seed images are placeholders.
 
-Brand: the shop is named **Luma** (user decision; replaced the designer's first pick "Calco").
+Brand: the shop is named **JUAG Impresiones y Papelería Creativa** (user decision; replaced "Luma", which replaced the designer's first pick "Calco").
 
 ## Direction contract
 
@@ -23,7 +23,7 @@ OWN-WORLD: Silicone-liner ground (cool #eef1f6) printed with a visible cut grid;
 
 STORY: The visitor sees in one look that everything here is made with their own text, that the shop reviews each order, and that delivery is pickup or shipping; they filter by category or search, open a product, write the personalization and add it to the cart, then follow the order as a production record.
 
-FIRST VIEWPORT: Header with the Luma wordmark as a small pink sticker and plain links. On the liner grid, a large cobalt sticker (slightly rotated) holds the user's headline "PAPELERÍA LUMA" in white expanded type, one line of subcopy and the working search field with its button. Beside it two small round stickers state true facts (each order is reviewed before production; pickup or shipping). Under it a row of category stickers in their vinyl colours (pill die shape, because labels such as Calendarios do not fit a legible round sticker), then the first row of product stickers starts above the fold.
+FIRST VIEWPORT: Header with the JUAG wordmark as a small pink sticker and plain links. On the liner grid, a large cobalt sticker (slightly rotated) holds the name "JUAG" in white expanded type with "Impresiones y papelería creativa" under it in lemon, one line of subcopy and the working search field with its button. Beside it two small round stickers state true facts (each order is reviewed before production; pickup or shipping). Under it a row of category stickers in their vinyl colours (pill die shape, because labels such as Calendarios do not fit a legible round sticker), then the first row of product stickers starts above the fold.
 
 FORM: Plancha de stickers troquelada, position 4 of the ordered list (1 tapa de cuaderno escolar, 2 pliego de prueba de imprenta, 3 encomienda de correo, 4 plancha de stickers, 5 riso, 6 cinta Dymo, 7 muestrario de papeles); seed:4e5ab713bd12414e. Raises kept: visible cut grid as the real armature (Crouwel), one strict state vocabulary across screens (one-bit desktop), total flat colour with no gradients or glows (elbow panel), order history as a production record that grows step by step (coiled clay). Signature interaction: hovering or focusing a product sticker lifts its corner as if peeling it off the liner. Motion grammar: one load moment, the hero sticker settling onto the sheet; everything else answers the visitor's action.
 

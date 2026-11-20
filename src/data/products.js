@@ -1,4 +1,4 @@
-// Catálogo de productos de Luma.
+// Catálogo de productos de JUAG Impresiones y Papelería Creativa.
 //
 // Después de cambiar algo acá, corré:   npm run catalogo
 // (actualiza los productos en la base sin borrar usuarios ni pedidos).

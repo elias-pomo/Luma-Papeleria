@@ -47,7 +47,7 @@ Everything is made to order: each item carries the customer's own text, names, l
 
 ## Brand Commitments
 
-- The shop is named **Luma** (user decision, fictional business). Hero headline "PAPELERÍA LUMA" was written by the user.
+- The shop is named **JUAG Impresiones y Papelería Creativa** (user decision; earlier names "Luma" and "Calco" are retired). Short form "JUAG" for the wordmark; the home hero shows "JUAG" with "Impresiones y papelería creativa" under it.
 
 ## Evidence on Hand
 

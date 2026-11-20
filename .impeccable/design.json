@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-11-19T00:00:00Z",
-  "title": "Design System: Luma",
+  "title": "Design System: JUAG Impresiones y Papelería Creativa",
   "extensions": {
     "colorMeta": {
       "liner": { "role": "neutral", "displayName": "Silicone Liner", "cssVar": "--liner", "tonalRamp": ["oklch(15% 0.006 260)", "oklch(25% 0.008 260)", "oklch(35% 0.01 260)", "oklch(45% 0.012 260)", "oklch(55% 0.012 260)", "oklch(65% 0.012 260)", "oklch(80% 0.01 260)", "oklch(96% 0.008 260)"] },
@@ -145,7 +145,7 @@
       "kind": "nav",
       "refersTo": "nav",
       "description": "White band with the pink wordmark sticker and plain ink links; current page cobalt underlined.",
-      "html": "<header class=\"ds-top\"><a class=\"ds-brand\" href=\"#\"><span class=\"ds-mark\">luma</span><span class=\"ds-sub\">papelería personalizada</span></a><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Catálogo</a><a href=\"#\">Mis pedidos</a><a href=\"#\">Carrito<span class=\"ds-count\">2</span></a></nav></header>",
+      "html": "<header class=\"ds-top\"><a class=\"ds-brand\" href=\"#\"><span class=\"ds-mark\">JUAG</span><span class=\"ds-sub\">impresiones y papelería creativa</span></a><nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Catálogo</a><a href=\"#\">Mis pedidos</a><a href=\"#\">Carrito<span class=\"ds-count\">2</span></a></nav></header>",
       "css": ".ds-top { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; flex-wrap: wrap; padding: 0.9rem 1.5rem; background: #fff; border-bottom: 1px solid var(--line, #d3dae6); font-family: Archivo, system-ui, sans-serif; } .ds-brand { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--ink, #17182b); text-decoration: none; } .ds-mark { display: inline-block; padding: 0.2rem 0.85rem 0.3rem; border: 3px solid #fff; border-radius: 999px; outline: 1.5px dashed var(--die, #9aa5ba); outline-offset: 2px; background: var(--pink, #ff5fa2); color: var(--ink, #17182b); font-size: 1.35rem; font-weight: 850; font-stretch: 125%; letter-spacing: -0.03em; line-height: 1.1; transform: rotate(-3deg); } .ds-sub { font-size: 0.875rem; font-weight: 500; color: var(--ink-soft, #4b5270); line-height: 1.2; max-width: 9rem; } .ds-nav { display: flex; align-items: center; gap: 0.35rem 1.25rem; flex-wrap: wrap; } .ds-nav a { color: var(--ink, #17182b); text-decoration: none; font-weight: 600; padding: 0.25rem 0; } .ds-nav a:hover { color: var(--cobalt, #2346d8); } .ds-nav a:focus-visible { outline: 3px solid var(--cobalt, #2346d8); outline-offset: 3px; border-radius: 6px; } .ds-nav a[aria-current='page'] { color: var(--cobalt, #2346d8); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em; } .ds-count { display: inline-grid; place-items: center; min-width: 1.4rem; height: 1.4rem; margin-left: 0.3rem; padding: 0 0.35rem; border-radius: 999px; background: var(--lemon, #ffd83d); color: var(--ink, #17182b); font-size: 0.75rem; font-weight: 800; }"
     }
   ],

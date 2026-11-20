@@ -1,5 +1,5 @@
 ---
-name: Luma
+name: JUAG Impresiones y Papelería Creativa
 description: Personalized stationery made to order, sold from a kiss-cut sticker sheet.
 colors:
   liner: "#eef1f6"
@@ -151,7 +151,7 @@ components:
     textColor: "{colors.weed-white}"
 ---
 
-# Design System: Luma
+# Design System: JUAG Impresiones y Papelería Creativa
 
 ## Overview
 
@@ -180,7 +180,7 @@ A cool neutral liner and deep ink carry the structure; six saturated vinyls carr
 - **Cobalt Vinyl** (cobalt): the one action colour. Primary buttons, links, focus rings, caret, the checked radio, the hero sticker, the Agendas category, and the "confirmed / payment" state. **Cobalt Pressed** (cobalt-dark) is its hover and the notice text.
 
 ### Secondary
-- **Bubblegum** (bubblegum): the Luma wordmark sticker, the Cuadernos category, unread notification dots and badge, and the current step of an order history.
+- **Bubblegum** (bubblegum): the JUAG wordmark sticker, the Cuadernos category, unread notification dots and badge, and the current step of an order history.
 - **Lemon** (lemon): Stickers category, the price-tag sticker, the personalization preview label, cart and tab counts, text selection, the order-received sticker and the "waiting for review" state.
 
 ### Tertiary
@@ -278,7 +278,7 @@ Vinyl pills: confident, flat, heavy.
 - **Hero search:** white pill with an inline magnifier, lemon focus ring on cobalt.
 
 ### Navigation
-- **Top bar:** white band with a 1px bottom rule. The wordmark is a lowercase "luma" pink pill sticker, 850 at 125%, rotated -3deg, with "papelería personalizada" beside it. Links are ink at 600, cobalt on hover; the current page is cobalt with a 2px underline. Cart count is a lemon pill; the notification bell opens a white panel with a 1.5px ink edge.
+- **Top bar:** white band with a 1px bottom rule. The wordmark is an uppercase "JUAG" pink pill sticker, 850 at 125%, rotated -3deg, with "impresiones y papelería creativa" beside it. Links are ink at 600, cobalt on hover; the current page is cobalt with a 2px underline. Cart count is a lemon pill; the notification bell opens a white panel with a 1.5px ink edge.
 - **Admin tabs:** pills with a 1.5px edge; active fills ink with a lemon count.
 - **Footer:** solid ink band.
 

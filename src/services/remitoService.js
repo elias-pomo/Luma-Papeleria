@@ -1,6 +1,6 @@
 const PDFDocument = require('pdfkit');
 
-const BUSINESS_NAME = process.env.BUSINESS_NAME || 'Luma papelería personalizada';
+const BUSINESS_NAME = process.env.BUSINESS_NAME || 'JUAG Impresiones y Papelería Creativa';
 
 function formatDate(date) {
   return new Date(date).toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });

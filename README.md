@@ -1,4 +1,4 @@
-# Luma: sistema web de pedidos para papelería personalizada
+# JUAG Impresiones y Papelería Creativa: sistema web de pedidos
 
 Proyecto de facultad. Los clientes eligen productos del catálogo, indican la
 personalización y hacen el pedido. La papelería lo revisa, lo confirma o lo
