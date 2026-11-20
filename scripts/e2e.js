@@ -28,6 +28,19 @@ function check(name, ok, detail = '') {
 }
 const section = (t) => console.log(`\n${t}`);
 
+// Completa los campos guiados de un producto (o el cuadro libre si no tiene).
+function personalize(product, text) {
+  if (!product.options || !product.options.length) return { customization: text };
+  const body = { notes: text };
+  for (const o of product.options) {
+    if (o.type === 'select' || o.type === 'color') body[`opt_${o.key}`] = o.choices[0];
+    else if (o.type === 'date') body[`opt_${o.key}`] = '2027-03-15';
+    else if (o.type === 'url') body[`opt_${o.key}`] = 'https://example.com/logo.png';
+    else body[`opt_${o.key}`] = text.slice(0, o.maxLength || 60);
+  }
+  return body;
+}
+
 // Navegador mínimo con cookies.
 function browser() {
   const jar = new Map();
@@ -96,11 +109,11 @@ async function main() {
   check('login de admin', r.status === 302 && r.location === '/admin');
 
   section('Carrito y pedido (CU03, CU04, CU09)');
-  r = await ana('/carrito/agregar', { productId: product._id, qty: '1.5', customization: 'x' });
+  r = await ana('/carrito/agregar', { productId: product._id, qty: '1.5', ...personalize(product, 'x') });
   check('rechaza cantidad no entera', r.status === 400);
   r = await ana('/carrito/agregar', { productId: product._id, qty: '2', customization: '' });
   check('exige personalización', r.status === 400);
-  await ana('/carrito/agregar', { productId: product._id, qty: '2', customization: 'Nombre: Ana' });
+  await ana('/carrito/agregar', { productId: product._id, qty: '2', ...personalize(product, 'Ana') });
   r = await ana('/carrito/checkout', { action: 'cotizar', postalCode: cp });
   check('cotiza el envío con la tarifa vigente', r.html.includes(`Envío a CP ${cp}`));
   r = await ana('/carrito/checkout', { action: 'cotizar', postalCode: '0001' });
@@ -113,8 +126,28 @@ async function main() {
   const orderA = await Order.findOne({ client: stored._id }).lean();
   check('crea el pedido en Solicitado', r.status === 302 && orderA && orderA.status === 'Solicitado');
   check('guarda precio de la base y costo de envío', orderA.items[0].unitPrice === product.basePrice && orderA.shippingCost === (await findRate(cp)).cost);
+  if (product.options && product.options.length) {
+    const first = product.options[0];
+    check('guarda la personalización guiada en líneas', orderA.items[0].customization.startsWith(`${first.label}: `) && orderA.items[0].customization.includes('Aclaraciones: Ana'));
+  }
 
-  await beto('/carrito/agregar', { productId: product._id, qty: '1', customization: 'Retiro Beto' });
+  section('Ficha de producto');
+  r = await anon(`/productos/${product._id}`);
+  check('muestra el plazo de producción', !product.productionDays || r.html.includes(product.productionDays));
+  check('muestra "Combiná con" con otros productos', r.html.includes('Combiná con') && /class="product[ "]/.test(r.html));
+  r = await anon(`/productos/${product._id}?cp=${cp}`);
+  check('cotiza el envío desde la ficha', r.html.includes(`Envío a CP ${cp}`));
+  r = await anon(`/productos/${product._id}?cp=0001`);
+  check('avisa si no hay envío a ese CP', r.html.includes('No tenemos envío al CP 0001'));
+  r = await anon(`/productos/${product._id}?cp=12ab`);
+  check('rechaza un CP inválido en la ficha', r.html.includes('tiene que tener 4 números'));
+  const choiceOpt = (product.options || []).find((o) => o.type === 'select' || o.type === 'color');
+  if (choiceOpt) {
+    r = await ana('/carrito/agregar', { productId: product._id, qty: '1', ...personalize(product, 'x'), [`opt_${choiceOpt.key}`]: 'Inventado' });
+    check('rechaza una opción que no está en la lista', r.status === 400);
+  }
+
+  await beto('/carrito/agregar', { productId: product._id, qty: '1', ...personalize(product, 'Beto') });
   await beto('/carrito/checkout', { deliveryMode: 'retiro', action: 'confirmar' });
   const betoUser = await User.findOne({ email: EMAILS[1] }).lean();
   const orderB = await Order.findOne({ client: betoUser._id }).lean();
@@ -161,7 +194,7 @@ async function main() {
   check('el cliente ve el motivo del rechazo', r.html.includes('Diseño no disponible'));
 
   section('Cancelación (CU11)');
-  await beto('/carrito/agregar', { productId: product._id, qty: '1', customization: 'Para cancelar' });
+  await beto('/carrito/agregar', { productId: product._id, qty: '1', ...personalize(product, 'Cancelar') });
   await beto('/carrito/checkout', { deliveryMode: 'retiro', action: 'confirmar' });
   const orderC = await Order.findOne({ client: betoUser._id, status: 'Solicitado' }).lean();
   r = await beto(`/mis-pedidos/${orderC._id}/cancelar`, {});

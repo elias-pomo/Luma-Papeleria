@@ -52,6 +52,12 @@ const TONES = { Agendas: 'cobalt', Cuadernos: 'pink', Stickers: 'lemon', 'Tarjet
 const TONE_LIST = ['cobalt', 'pink', 'lemon', 'mint', 'orange', 'kraft'];
 app.locals.categoryTone = (cat = '') =>
   `tone-${TONES[cat] || TONE_LIST[[...cat].reduce((h, c) => h + c.charCodeAt(0), 0) % TONE_LIST.length]}`;
+// Muestras de color para los campos de personalización de tipo "color".
+const SWATCHES = {
+  Verde: '#2e9e6b', Rosa: '#ff8fbf', Azul: '#3a5bd9', Negro: '#1b1c2b', Lila: '#b49cff', Amarillo: '#ffd83d',
+  Dorado: '#c9a227', Plateado: '#b8bec7', Naranja: '#ff8a3d', Blanco: '#ffffff',
+};
+app.locals.swatch = (name) => SWATCHES[name] || '#dde3ec';
 // Forma de troquel según la categoría (proporción de la foto y del sticker).
 const SHAPES = { Agendas: 'shape-portrait', Cuadernos: 'shape-portrait', 'Tarjetería': 'shape-card', Stickers: 'shape-round', Packaging: 'shape-square' };
 app.locals.categoryShape = (cat = '') => SHAPES[cat] || 'shape-landscape';

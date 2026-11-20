@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Product = require('../models/Product');
+const { DETAIL_FIELDS, productPageLocals } = require('../services/productPageService');
 
 const router = express.Router();
 
@@ -42,11 +43,12 @@ router.get('/productos/:id', async (req, res, next) => {
   if (!mongoose.isValidObjectId(req.params.id)) return next(); // cae en el 404
 
   const product = await Product.findOne({ _id: req.params.id, published: true })
-    .select(PUBLIC_FIELDS)
+    .select(DETAIL_FIELDS)
     .lean();
   if (!product) return next();
 
-  res.render('producto', { title: product.name, product, errors: [], values: {} });
+  const extra = await productPageLocals(product, req.query);
+  res.render('producto', { title: product.name, product, ...extra, errors: [], values: {} });
 });
 
 module.exports = router;

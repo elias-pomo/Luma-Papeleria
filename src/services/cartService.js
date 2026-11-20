@@ -3,7 +3,7 @@
 // confirmar, así nadie puede cambiar un precio desde el navegador.
 
 const MAX_QTY = 1000;
-const MAX_CUSTOMIZATION = 500;
+const MAX_CUSTOMIZATION = 800;
 
 // Devuelve el carrito del usuario logueado. Si la sesión quedó con el
 // carrito de otro usuario (mismo navegador), lo descarta.

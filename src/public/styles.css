@@ -852,3 +852,71 @@ form label.radio input:focus-visible { outline: 3px solid var(--cobalt); outline
   .shape-round .product-media { border-width: 5px; margin: 4px; outline-offset: 3px; }
   .product .price { font-size: 0.9rem; }
 }
+
+/* ==========================================================================
+   Ficha completa
+   ========================================================================== */
+
+.detail-gallery { display: flex; flex-direction: column; gap: var(--gap); }
+
+/* Miniaturas: chicos stickers cuadrados; la elegida lleva el troquel azul */
+.thumbs { display: flex; gap: 0.9rem; flex-wrap: wrap; list-style: none; margin: 0; padding: 6px; }
+.thumb {
+  display: block; width: 72px; aspect-ratio: 1; padding: 4px;
+  background: var(--white); border-radius: 14px;
+  outline: 1.5px dashed var(--die); outline-offset: 3px;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--r-field); display: block; }
+.thumb:hover { outline-color: var(--ink); }
+.thumb[aria-current="true"] { outline: 2px solid var(--cobalt); }
+
+/* Datos del producto: íconos dibujados, una línea cada uno */
+.product-facts { list-style: none; margin: -0.25rem 0 1.5rem; padding: 0; display: grid; gap: 0.55rem; }
+.product-facts li { display: flex; gap: 0.65rem; align-items: flex-start; color: var(--ink-soft); }
+.product-facts strong { color: var(--ink); font-weight: 700; }
+.product-facts svg {
+  width: 1.25rem; height: 1.25rem; flex: none; margin-top: 0.1rem;
+  fill: none; stroke: var(--cobalt); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.add-form h2, .quote h2 { font-size: var(--fs-md); margin-bottom: 1rem; }
+.add-row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-top: 0.5rem; }
+.add-row .qty { margin-bottom: 0; }
+.add-row button { flex: 1 1 200px; }
+
+/* Colores como stickers redonditos */
+.swatches { margin-bottom: 1.1rem; }
+.swatch-row { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; }
+.swatch { position: relative; display: inline-flex; align-items: center; gap: 0.4rem; margin: 0; font-weight: 500; cursor: pointer; }
+.swatch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.swatch-dot {
+  width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--swatch);
+  border: 3px solid var(--white); box-shadow: 0 0 0 1.5px var(--line);
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.swatch:hover .swatch-dot { transform: scale(1.08); }
+.swatch input:checked + .swatch-dot { box-shadow: 0 0 0 2.5px var(--cobalt); }
+.swatch input:checked ~ .swatch-name { color: var(--cobalt); font-weight: 700; }
+.swatch input:focus-visible + .swatch-dot { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+
+.quote { margin-top: var(--gap); }
+.quote .cp-row { margin: 0 0 0.75rem; max-width: 380px; }
+.quote-result { margin: 0; }
+.quote-result.is-error { color: #9b1236; }
+
+.pairs { margin-top: calc(var(--cell) * 3); }
+.pairs h2 { font-size: var(--fs-xl); font-weight: 850; font-stretch: 118%; letter-spacing: -0.03em; margin-bottom: calc(var(--cell) * 1.25); }
+
+/* La personalización se lee en líneas, en el carrito, el pedido y el resumen */
+.custom-text { white-space: pre-line; }
+
+/* Formulario guiado: aire entre un campo y el rótulo del siguiente */
+.add-form > label[for] { margin-bottom: 0; }
+.add-form > input:not([type="hidden"]), .add-form > select, .add-form > textarea { margin-bottom: 1.15rem; }
+.add-form > .hint { margin: 0.15rem 0 0; }
+.add-form > .preview-label { margin-bottom: 1.4rem; }
+
+/* La foto acompaña mientras se completa el formulario (escritorio) */
+@media (min-width: 761px) {
+  .detail-gallery { position: sticky; top: var(--gap); }
+}

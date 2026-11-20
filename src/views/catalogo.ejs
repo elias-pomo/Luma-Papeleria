@@ -52,14 +52,7 @@
   <span class="reg reg-bl" aria-hidden="true"></span><span class="reg reg-br" aria-hidden="true"></span>
   <div class="grid<%= filtering ? ' stagger' : '' %>">
     <% products.forEach((p, i) => { %>
-      <a class="product sticker <%= categoryTone(p.category) %> <%= categoryShape(p.category) %>" href="/productos/<%= p._id %>" style="--i: <%= i %>">
-        <%- include('partials/product-media', { product: p, alt: '', vt: `sticker-${p._id}` }) %>
-        <div class="product-body">
-          <span class="category"><span class="dot"></span><%= p.category %></span>
-          <h2 class="<%= productImage(p) ? '' : 'visually-hidden' %>"><%= p.name %></h2>
-          <p class="price"><span class="price-label">desde</span> <%= formatPrice(p.basePrice) %></p>
-        </div>
-      </a>
+      <%- include('partials/product-card', { p, i, vt: `sticker-${p._id}` }) %>
     <% }) %>
   </div>
   </div>

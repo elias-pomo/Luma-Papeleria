@@ -28,7 +28,7 @@
                 <input type="number" name="qty" min="1" max="1000" step="1" value="<%= l.qty %>" required inputmode="numeric">
               </label>
               <label>Personalización
-                <textarea name="customization" rows="2" maxlength="500" required><%= l.customization %></textarea>
+                <textarea name="customization" rows="<%= Math.min(7, Math.max(2, l.customization.split('\n').length)) %>" maxlength="800" required><%= l.customization %></textarea>
               </label>
               <button type="submit" class="secondary">Guardar cambios</button>
             </form>

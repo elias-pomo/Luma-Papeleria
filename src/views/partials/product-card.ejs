@@ -1,0 +1,9 @@
+<%# Sticker de producto en una plancha. Recibe: p (producto), i (posición, para la cascada), vt (opcional) %>
+<a class="product sticker <%= categoryTone(p.category) %> <%= categoryShape(p.category) %>" href="/productos/<%= p._id %>" style="--i: <%= locals.i || 0 %>">
+  <%- include('product-media', { product: p, alt: '', vt: locals.vt }) %>
+  <div class="product-body">
+    <span class="category"><span class="dot"></span><%= p.category %></span>
+    <h2 class="<%= productImage(p) ? '' : 'visually-hidden' %>"><%= p.name %></h2>
+    <p class="price"><span class="price-label">desde</span> <%= formatPrice(p.basePrice) %></p>
+  </div>
+</a>

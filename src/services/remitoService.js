@@ -62,7 +62,11 @@ function writeRemito(order, stream) {
     doc.text(String(item.qty), col.qty + 6, y, { width: 50 });
     doc.font('Helvetica-Bold').text(item.name, col.desc, y, { width: right - col.desc });
     doc.font('Helvetica').fillColor('#444')
-      .text(`Personalización: ${item.customization || '—'}`, col.desc, doc.y + 2, { width: right - col.desc });
+      // La personalización guiada ya trae un rótulo por línea; el texto libre lleva el prefijo.
+      .text(
+        (item.customization || '').includes('\n') ? item.customization : `Personalización: ${item.customization || '—'}`,
+        col.desc, doc.y + 2, { width: right - col.desc }
+      );
     doc.fillColor('#000');
     y = doc.y + 8;
     doc.moveTo(left, y - 4).lineTo(right, y - 4).stroke('#ddd');

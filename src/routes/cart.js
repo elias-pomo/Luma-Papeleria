@@ -5,6 +5,8 @@ const Order = require('../models/Order');
 const requireRole = require('../middleware/role');
 const { createOrder } = require('../services/orderService');
 const { findRate, isValidPostalCode } = require('../services/shippingService');
+const { DETAIL_FIELDS, productPageLocals } = require('../services/productPageService');
+const { parseGuided } = require('../services/personalizationService');
 const { getCart, clearCart, parseQty, parseCustomization, MAX_QTY, MAX_CUSTOMIZATION } = require('../services/cartService');
 
 const router = express.Router();
@@ -69,23 +71,30 @@ router.post('/agregar', async (req, res, next) => {
   const productId = String(req.body.productId || '');
   if (!mongoose.isValidObjectId(productId)) return next();
   const product = await Product.findOne({ _id: productId, published: true })
-    .select('name description basePrice image imageUrl category')
+    .select(DETAIL_FIELDS)
     .lean();
   if (!product) return next();
 
   const qty = parseQty(req.body.qty);
-  const customization = parseCustomization(req.body.customization);
   const errors = [];
   if (qty === null) errors.push(QTY_ERROR);
-  if (customization === null) errors.push(CUSTOMIZATION_ERROR);
+
+  // Con campos guiados se arma el texto a partir de ellos; si no, cuadro libre.
+  let customization;
+  let values = { qty: req.body.qty, customization: req.body.customization };
+  if (product.options && product.options.length) {
+    const guided = parseGuided(product, req.body);
+    errors.push(...guided.errors);
+    customization = guided.customization;
+    values = { ...values, ...guided.values };
+  } else {
+    customization = parseCustomization(req.body.customization);
+    if (customization === null) errors.push(CUSTOMIZATION_ERROR);
+  }
 
   if (errors.length) {
-    return res.status(400).render('producto', {
-      title: product.name,
-      product,
-      errors,
-      values: { qty: req.body.qty, customization: req.body.customization },
-    });
+    const extra = await productPageLocals(product, {});
+    return res.status(400).render('producto', { title: product.name, product, ...extra, errors, values });
   }
 
   getCart(req).push({ productId, qty, customization });

@@ -1,11 +1,36 @@
 <%- include('partials/header') %>
+<%
+  const guided = product.options && product.options.length;
+  const opts = (values && values.opts) || {};
+  const photoLink = (n) => `/productos/${product._id}?foto=${n}${quote ? `&cp=${encodeURIComponent(quote.postalCode)}` : ''}`;
+%>
 <nav class="crumbs" aria-label="Ubicación">
   <a class="back-link" href="/">Volver al catálogo</a>
   <a class="chip category-chip <%= categoryTone(product.category) %>" href="/?categoria=<%= encodeURIComponent(product.category) %>"><%= product.category %></a>
 </nav>
+
 <article class="detail">
-  <div class="detail-media sticker <%= categoryTone(product.category) %> <%= categoryShape(product.category) %>">
-    <%- include('partials/product-media', { product, vt: `sticker-${product._id}` }) %>
+  <div class="detail-gallery">
+    <div class="detail-media sticker <%= categoryTone(product.category) %> <%= categoryShape(product.category) %>">
+      <% if (photos.length) { %>
+        <div class="product-media" style="view-transition-name: sticker-<%= product._id %>">
+          <img id="main-photo" src="<%= photos[activePhoto] %>" alt="<%= product.name %>, foto <%= activePhoto + 1 %> de <%= photos.length %>" decoding="async">
+        </div>
+      <% } else { %>
+        <%- include('partials/product-media', { product, vt: `sticker-${product._id}` }) %>
+      <% } %>
+    </div>
+    <% if (photos.length > 1) { %>
+      <ul class="thumbs" aria-label="Fotos del producto">
+        <% photos.forEach((src, n) => { %>
+          <li>
+            <a href="<%= photoLink(n + 1) %>" class="thumb" data-src="<%= src %>" data-n="<%= n + 1 %>" <%- n === activePhoto ? 'aria-current="true"' : '' %>>
+              <img src="<%= src %>" alt="Ver foto <%= n + 1 %>" loading="lazy">
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
   </div>
 
   <div class="detail-info">
@@ -13,48 +38,169 @@
     <p class="lead"><%= product.description %></p>
     <p class="price price-tag"><span class="price-label">Precio base</span> <%= formatPrice(product.basePrice) %></p>
 
+    <ul class="product-facts">
+      <% if (product.productionDays) { %>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span><strong>Listo en <%= product.productionDays %></strong> desde que confirmamos el pago.</span>
+        </li>
+      <% } %>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+        <span>Revisamos tu personalización antes de producirlo.</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+        <span>Retiro en el local sin costo o envío a domicilio.</span>
+      </li>
+    </ul>
+
     <% if (!user) { %>
       <div class="card">
         <p><a href="/login?next=<%= encodeURIComponent('/productos/' + product._id) %>">Ingresá</a> o <a href="/registro">creá una cuenta</a> para hacer un pedido.</p>
       </div>
     <% } else if (user.role === 'client') { %>
-      <form method="post" action="/carrito/agregar" class="card add-form">
+      <form method="post" action="/carrito/agregar" class="card add-form" id="add-form">
+        <h2>Personalizalo</h2>
         <% if (errors.length) { %>
           <ul class="alert"><% errors.forEach(e => { %><li><%= e %></li><% }) %></ul>
         <% } %>
         <input type="hidden" name="productId" value="<%= product._id %>">
-        <label for="customization">¿Cómo lo querés?</label>
-        <p class="hint" id="customization-hint">Escribí el texto, los nombres, colores o lo que tenga que llevar.</p>
-        <div class="preview-label" id="preview" data-empty="Tu texto aparece acá" aria-hidden="true"></div>
-        <textarea id="customization" name="customization" rows="3" maxlength="500" required aria-describedby="customization-hint"
-          placeholder="Ej.: Sofía, tapa verde, letras doradas"><%= values.customization || '' %></textarea>
-        <label class="qty">Cantidad
-          <input type="number" name="qty" min="1" max="1000" step="1" value="<%= values.qty || 1 %>" required inputmode="numeric">
-        </label>
-        <button type="submit">Agregar al carrito</button>
+
+        <div class="preview-label" id="preview" data-empty="Lo que completes aparece acá" aria-hidden="true"></div>
+
+        <% if (guided) { %>
+          <% product.options.forEach(o => { const id = `opt-${o.key}`; const val = opts[o.key] || ''; %>
+            <% if (o.type === 'color') { %>
+              <fieldset class="swatches" data-label="<%= o.label %>">
+                <legend><%= o.label %><%= o.required ? '' : ' (opcional)' %></legend>
+                <div class="swatch-row">
+                  <% o.choices.forEach(c => { %>
+                    <label class="swatch">
+                      <input type="radio" name="opt_<%= o.key %>" value="<%= c %>" <%= val === c ? 'checked' : '' %> <%= o.required ? 'required' : '' %>>
+                      <span class="swatch-dot" style="--swatch: <%= swatch(c) %>"></span>
+                      <span class="swatch-name"><%= c %></span>
+                    </label>
+                  <% }) %>
+                </div>
+              </fieldset>
+            <% } else { %>
+              <label for="<%= id %>"><%= o.label %><%= o.required ? '' : ' (opcional)' %></label>
+              <% if (o.hint) { %><p class="hint" id="<%= id %>-hint"><%= o.hint %></p><% } %>
+              <% if (o.type === 'select') { %>
+                <select id="<%= id %>" name="opt_<%= o.key %>" data-label="<%= o.label %>" <%= o.required ? 'required' : '' %>>
+                  <option value="">Elegí una opción</option>
+                  <% o.choices.forEach(c => { %><option value="<%= c %>" <%= val === c ? 'selected' : '' %>><%= c %></option><% }) %>
+                </select>
+              <% } else { %>
+                <input id="<%= id %>" name="opt_<%= o.key %>" data-label="<%= o.label %>"
+                  type="<%= o.type === 'date' ? 'date' : o.type === 'url' ? 'url' : 'text' %>"
+                  value="<%= val %>" <%= o.required ? 'required' : '' %>
+                  <% if (o.type === 'text' || o.type === 'url') { %>maxlength="<%= o.maxLength || 60 %>"<% } %>
+                  <% if (o.placeholder) { %>placeholder="<%= o.placeholder %>"<% } %>
+                  <% if (o.hint) { %>aria-describedby="<%= id %>-hint"<% } %>>
+              <% } %>
+            <% } %>
+          <% }) %>
+          <label for="notes">Algo más que tengamos que saber (opcional)</label>
+          <textarea id="notes" name="notes" rows="2" maxlength="300" data-label="Aclaraciones"
+            placeholder="Ej.: que el nombre vaya en cursiva"><%= (values && values.notes) || '' %></textarea>
+        <% } else { %>
+          <label for="customization">¿Cómo lo querés?</label>
+          <p class="hint" id="customization-hint">Escribí el texto, los nombres, colores o lo que tenga que llevar.</p>
+          <textarea id="customization" name="customization" rows="3" maxlength="800" required aria-describedby="customization-hint"
+            placeholder="Ej.: Sofía, tapa verde, letras doradas"><%= (values && values.customization) || '' %></textarea>
+        <% } %>
+
+        <div class="add-row">
+          <label class="qty">Cantidad
+            <input type="number" name="qty" min="1" max="1000" step="1" value="<%= (values && values.qty) || 1 %>" required inputmode="numeric">
+          </label>
+          <button type="submit">Agregar al carrito</button>
+        </div>
       </form>
-      <script>
-        // Mejora progresiva: muestra el texto sobre una etiqueta mientras se escribe.
-        (function () {
-          var input = document.getElementById('customization');
-          var preview = document.getElementById('preview');
-          if (!input || !preview) return;
-          var sync = function () {
-            var text = input.value.trim();
-            var wasEmpty = !preview.textContent;
-            preview.textContent = text;
-            // Se asienta solo cuando pasa de vacía a tener texto, no en cada tecla.
-            if (wasEmpty && text) {
-              preview.classList.remove('filled');
-              void preview.offsetWidth;
-              preview.classList.add('filled');
-            }
-          };
-          input.addEventListener('input', sync);
-          sync();
-        })();
-      </script>
     <% } %>
+
+    <section class="card quote" id="envio" aria-labelledby="envio-title">
+      <h2 id="envio-title">¿Cuánto sale el envío?</h2>
+      <form method="get" action="/productos/<%= product._id %>#envio" class="cp-row">
+        <label class="visually-hidden" for="cp">Código postal</label>
+        <input type="text" id="cp" name="cp" inputmode="numeric" pattern="\d{4}" maxlength="4" placeholder="Tu código postal" value="<%= quote ? quote.postalCode : '' %>">
+        <button type="submit" class="secondary">Calcular</button>
+      </form>
+      <% if (quote && quote.invalid) { %>
+        <p class="quote-result is-error">El código postal tiene que tener 4 números.</p>
+      <% } else if (quote && quote.noCoverage) { %>
+        <p class="quote-result is-error">No tenemos envío al CP <%= quote.postalCode %>. Podés retirarlo en el local sin costo.</p>
+      <% } else if (quote) { %>
+        <p class="quote-result">Envío a CP <%= quote.postalCode %>: <strong><%= formatPrice(quote.cost) %></strong>. Se suma una vez por pedido, no por producto.</p>
+      <% } else { %>
+        <p class="muted small">Retirar en el local no tiene costo.</p>
+      <% } %>
+    </section>
   </div>
 </article>
+
+<% if (related.length) { %>
+  <section class="pairs" aria-labelledby="pairs-title">
+    <h2 id="pairs-title">Combiná con</h2>
+    <div class="sheet">
+      <span class="reg reg-tl" aria-hidden="true"></span><span class="reg reg-tr" aria-hidden="true"></span>
+      <span class="reg reg-bl" aria-hidden="true"></span><span class="reg reg-br" aria-hidden="true"></span>
+      <div class="grid">
+        <% related.forEach((p, i) => { %>
+          <%- include('partials/product-card', { p, i, vt: `sticker-${p._id}` }) %>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+<% } %>
+
+<script>
+  (function () {
+    // Galería: cambia la foto sin recargar (sin JS, cada miniatura es un link).
+    var main = document.getElementById('main-photo');
+    document.querySelectorAll('.thumb').forEach(function (t) {
+      t.addEventListener('click', function (e) {
+        if (!main) return;
+        e.preventDefault();
+        main.src = t.dataset.src;
+        main.alt = main.alt.replace(/foto \d+/, 'foto ' + t.dataset.n);
+        document.querySelectorAll('.thumb').forEach(function (x) { x.removeAttribute('aria-current'); });
+        t.setAttribute('aria-current', 'true');
+      });
+    });
+
+    // Vista previa: arma la etiqueta con lo que se va completando.
+    var form = document.getElementById('add-form');
+    var preview = document.getElementById('preview');
+    if (!form || !preview) return;
+    var sync = function () {
+      var lines = [];
+      form.querySelectorAll('[data-label]').forEach(function (el) {
+        var value = '';
+        if (el.tagName === 'FIELDSET') {
+          var checked = el.querySelector('input:checked');
+          value = checked ? checked.value : '';
+        } else {
+          value = el.value.trim();
+          if (el.type === 'date' && value) value = value.split('-').reverse().join('/');
+        }
+        if (value) lines.push(el.dataset.label + ': ' + value);
+      });
+      var free = form.querySelector('#customization');
+      if (free && free.value.trim()) lines.push(free.value.trim());
+      var wasEmpty = !preview.textContent;
+      preview.textContent = lines.join('\n');
+      if (wasEmpty && lines.length) {
+        preview.classList.remove('filled');
+        void preview.offsetWidth;
+        preview.classList.add('filled');
+      }
+    };
+    form.addEventListener('input', sync);
+    form.addEventListener('change', sync);
+    sync();
+  })();
+</script>
 <%- include('partials/footer') %>

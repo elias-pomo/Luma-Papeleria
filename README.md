@@ -48,6 +48,27 @@ Requisitos: Node 20 o superior y un MongoDB (local o Atlas).
 
 Los clientes se crean desde "Crear cuenta".
 
+## Catálogo: productos, plazos y personalización
+
+Todo el catálogo está en [`src/data/products.js`](src/data/products.js). Ahí se
+define, por producto:
+
+- precio, descripción y categoría;
+- `image` y `gallery`: la foto principal y las fotos extra de la ficha;
+- `productionDays`: el plazo que se muestra en la ficha (**los valores actuales son de ejemplo**);
+- `pairsWith`: los productos de "Combiná con";
+- `options`: los campos de personalización guiada (texto, lista, color, fecha o link).
+  **Los campos actuales son de ejemplo**: ajustalos a lo que ofrece cada producto.
+
+Después de cambiar ese archivo, corré:
+
+```bash
+npm run catalogo
+```
+
+Actualiza los productos en la base (y crea los nuevos) sin borrar usuarios ni
+pedidos. Los pedidos ya hechos conservan su precio y su personalización.
+
 ## Fotos de los productos
 
 1. Copiá cada foto a `src/public/img/productos/`.
